@@ -162,10 +162,10 @@ Las principales bibliotecas utilizadas son:
 
 ## Autores
 
-Julian Hilton Lino Pariona
-Diego Alonso Reátegui Gonzales
-Jim Navarrete Cáceres
-Flavio Roberto Pujay Angeles
+- Julian Hilton Lino Pariona
+- Diego Alonso Reátegui Gonzales
+- Jim Navarrete Cáceres
+- Flavio Roberto Pujay Angeles
 
 ---
 
