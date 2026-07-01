@@ -1,30 +1,50 @@
-# Fine-Tuning de CLIP-RN50 para Búsqueda Semántica Imagen-Texto
+# Fine-Tuning de CLIP-RN50 para Recuperación Imagen-Texto
 
-Este proyecto implementa el **fine-tuning del modelo CLIP-RN50 (OpenAI)** utilizando el dataset **Flickr8k** para mejorar la alineación entre imágenes y descripciones en lenguaje natural mediante aprendizaje contrastivo.
+Este proyecto implementa el **fine-tuning del modelo CLIP-RN50 de OpenAI** utilizando el conjunto de datos **Flickr8k** para mejorar la representación conjunta de imágenes y texto mediante aprendizaje contrastivo.
 
-El objetivo es entrenar un modelo capaz de representar imágenes y textos en un mismo espacio vectorial, permitiendo realizar búsquedas semánticas imagen-texto y texto-imagen con alta precisión.
+El modelo entrenado permite realizar tareas de **Image-to-Text Retrieval** y **Text-to-Image Retrieval**, aprendiendo un espacio de embeddings compartido donde imágenes y descripciones semánticamente relacionadas quedan cercanas.
 
-## Características
+---
 
-- Fine-tuning de CLIP-RN50 preentrenado.
-- Uso del dataset Flickr8k.
-- Entrenamiento mediante pérdida contrastiva.
-- Validación y evaluación del modelo.
-- Configuración reproducible mediante semillas aleatorias.
-- Implementación en Python utilizando PyTorch y OpenCLIP.
+## Objetivos
+
+- Implementar un modelo multimodal basado en CLIP.
+- Ajustar (Fine-Tuning) el modelo preentrenado sobre Flickr8k.
+- Evaluar el desempeño mediante métricas de recuperación.
+- Generar embeddings conjuntos para imágenes y texto.
+
+---
 
 ## Dataset
 
-Se utiliza **Flickr8k**, un conjunto de datos compuesto por:
+Se emplea el dataset **Flickr8k**, el cual contiene:
 
 - 8,000 imágenes
 - 5 descripciones por imagen
-- División estándar:
-  - 6,000 imágenes para entrenamiento
-  - 1,000 imágenes para validación
-  - 1,000 imágenes para prueba
+- Aproximadamente 40,000 captions
 
-El dataset es ampliamente utilizado para tareas de recuperación imagen-texto y generación de descripciones.
+División utilizada:
+
+- Entrenamiento
+- Validación
+- Prueba
+
+Cada imagen posee cinco descripciones independientes, lo que permite entrenar modelos de alineación imagen-texto.
+
+---
+
+## Arquitectura
+
+El proyecto utiliza:
+
+- **Modelo:** CLIP RN50
+- **Pesos iniciales:** OpenAI
+- **Framework:** PyTorch
+- **Tokenizer:** OpenCLIP
+
+El entrenamiento consiste en ajustar únicamente los parámetros del modelo para especializarlo en Flickr8k mediante una pérdida contrastiva.
+
+---
 
 ## Tecnologías utilizadas
 
@@ -33,69 +53,112 @@ El dataset es ampliamente utilizado para tareas de recuperación imagen-texto y 
 - OpenCLIP
 - Hugging Face Datasets
 - Transformers
-- Pillow
 - NumPy
 - Pandas
 - Matplotlib
+- Scikit-Learn
+- Pillow
+
+---
+
+## Instalación
+
+Clonar el repositorio:
+
+```bash
+git clone https://github.com/usuario/nombre-del-repositorio.git
+
+cd nombre-del-repositorio
+```
+
+Instalar dependencias:
+
+```bash
+pip install -r requirements.txt
+```
+
+---
 
 ## Estructura del proyecto
 
 ```
 .
 ├── BIMODAL-IMAGE-TEXT.ipynb
-├── README.md
-└── requirements.txt (opcional)
+├── requirements.txt
+└── README.md
 ```
+
+---
 
 ## Flujo del proyecto
 
-1. Configuración del entorno.
-2. Definición de hiperparámetros.
-3. Descarga y preparación del dataset Flickr8k.
-4. Preprocesamiento de imágenes y texto.
-5. Fine-tuning del modelo CLIP-RN50.
-6. Validación del entrenamiento.
-7. Evaluación del modelo.
-8. Obtención de embeddings para recuperación semántica.
+1. Instalación de dependencias.
+2. Configuración del entorno y semillas aleatorias.
+3. Descarga automática del dataset Flickr8k.
+4. Preprocesamiento de imágenes y captions.
+5. Carga del modelo CLIP-RN50 preentrenado.
+6. Fine-Tuning del modelo.
+7. Validación durante el entrenamiento.
+8. Evaluación mediante recuperación semántica.
+9. Obtención de embeddings para imágenes y texto.
 
-## Modelo utilizado
+---
 
-- Arquitectura: **CLIP RN50**
-- Pesos preentrenados: **OpenAI**
+## Métricas de evaluación
 
-El modelo aprende representaciones conjuntas de imágenes y texto para maximizar la similitud entre pares correctos y minimizar la de pares incorrectos.
+El notebook evalúa el modelo utilizando métricas estándar de recuperación:
 
-## Resultados esperados
+- Recall@1
+- Recall@5
+- Recall@10
+- Median Rank (MedR)
+- Rsum
 
-Al finalizar el entrenamiento, el modelo es capaz de:
+Estas métricas permiten medir qué tan bien el modelo recupera imágenes a partir de texto y viceversa.
 
-- Recuperar imágenes a partir de una descripción.
-- Recuperar descripciones a partir de una imagen.
-- Generar embeddings multimodales de alta calidad.
-- Mejorar el rendimiento respecto al modelo base en el dominio de Flickr8k.
+---
 
-## Cómo ejecutar
+## Resultados
 
-1. Clonar el repositorio.
+Al finalizar el entrenamiento, el modelo puede:
 
-```bash
-git clone https://github.com/usuario/nombre-del-repositorio.git
-cd nombre-del-repositorio
-```
+- Buscar imágenes a partir de una descripción.
+- Buscar descripciones a partir de una imagen.
+- Generar embeddings multimodales alineados.
+- Mejorar el desempeño sobre el modelo preentrenado en el dominio de Flickr8k.
 
-2. Instalar dependencias.
+---
 
-```bash
-pip install -r requirements.txt
-```
+## Ejecución
 
-3. Abrir el notebook.
+Abrir el notebook:
 
 ```bash
 jupyter notebook BIMODAL-IMAGE-TEXT.ipynb
 ```
 
-o ejecutarlo desde Google Colab.
+También puede ejecutarse directamente desde **Google Colab**.
+
+---
+
+## Dependencias
+
+Las principales bibliotecas utilizadas son:
+
+- torch
+- torchvision
+- open_clip_torch
+- transformers
+- datasets
+- huggingface_hub
+- numpy
+- pandas
+- matplotlib
+- Pillow
+- tqdm
+- scikit-learn
+
+---
 
 ## Autores
 
@@ -104,6 +167,8 @@ Diego Alonso Reátegui Gonzales
 Jim Navarrete Cáceres
 Flavio Roberto Pujay Angeles
 
+---
+
 ## Licencia
 
-Este proyecto tiene fines académicos.
+Este proyecto fue desarrollado con fines académicos y de investigación.
