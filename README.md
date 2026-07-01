@@ -1,0 +1,1 @@
+# Fine-Tuning-de-CLIP-RN50-para-Busqueda-Semantica-Imagen-Texto-con-Flickr8k
